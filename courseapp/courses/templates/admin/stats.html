@@ -1,0 +1,98 @@
+{% extends 'admin/base_site.html' %}
+
+<!--ghi de-->
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<h1><strong>THỐNG KÊ KHÓA HỌC TRỰC TUYẾN</strong></h1>
+
+<h2>SỐ LƯỢNG KHÓA HỌC: {{course_count}}</h2>
+
+<ul>
+    {% for c in course_stats %}
+    <li><strong>{{c.name}}</strong> : {{c.counter}}</li>
+    {% endfor %}
+</ul>
+
+<div style=" display: flex; justify-content: space-around;">
+     <div style="width: 50%;">
+        <canvas id="myChart1" style="width: 100%;"></canvas>
+    </div>
+    <div style="width: 50%; ">
+        <canvas id="myChart2" style="width: 100%;"></canvas>
+    </div>
+</div>
+
+
+<script>
+    let labels = [];
+    let values = [];
+    {% for c in course_stats %}
+        labels.push('{{ c.name }}');
+        values.push({{ c.counter }});
+    {% endfor %}
+
+
+    window.onload = () => {
+    const ctx1 = document.getElementById('myChart1');
+    const ctx2 = document.getElementById('myChart2');
+    const h = ctx1.clientHeight;
+
+    ctx2.height = h;
+
+      new Chart(ctx1, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Tên các khóa học',
+            data: values,
+            borderWidth: 1,
+            backgroundColor: [
+              'rgb(128, 0, 128)', // Màu tím
+              'rgb(0, 0, 139)',   // Màu xanh dương đậm
+              'rgb(173, 216, 230)' // Màu xanh dương nhạt
+            ],
+
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+
+      new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Tên các khóa học',
+            data: values,
+            borderWidth: 1,
+            backgroundColor: [
+              'rgb(128, 0, 128)', // Màu tím
+              'rgb(0, 0, 139)',   // Màu xanh dương đậm
+              'rgb(173, 216, 230)' // Màu xanh dương nhạt
+            ],
+
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+
+
+
+</script>
+
+{% endblock %}
