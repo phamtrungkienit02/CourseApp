@@ -100,6 +100,7 @@ pymysql.install_as_MySQLdb()
 
 AUTH_USER_MODEL = 'courses.User'
 
+
 MEDIA_ROOT = '%s/courses/static/' % BASE_DIR
 
 CKEDITOR_UPLOAD_PATH = "ckeditor/images/"
